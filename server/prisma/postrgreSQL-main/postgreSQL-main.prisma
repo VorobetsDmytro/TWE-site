@@ -1,0 +1,105 @@
+generator client {
+    provider      = "prisma-client-js"
+    output        = "./generated/client"
+    binaryTargets = ["native", "windows", "linux-musl"]
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("TWE_POSTGRESQL_MAIN_URL")
+}
+
+model Token {
+    user              User?    @relation(fields: [userId], references: [id])
+    userId            String?  @unique
+    accessToken       String   @id
+    isActive          Boolean
+    lastAuthorization DateTime @default(now())
+}
+
+model Role {
+    id    String @id
+    value String
+    users User[]
+}
+
+model Activationlink {
+    user        User?   @relation(fields: [userId], references: [id])
+    userId      String? @unique
+    link        String  @id
+    isActivated Boolean @default(false)
+}
+
+model User {
+    id             String          @id
+    email          String          @unique
+    username       String
+    password       String
+    token          Token?
+    activationLink Activationlink?
+    role           Role?           @relation(fields: [roleId], references: [id])
+    roleId         String?
+    createdAt      DateTime        @default(now())
+    newsCards      NewsCard[]
+    newsBlocks     NewsBlock[]
+    userBlockRates UserBlockRate[]
+}
+
+model NewsCard {
+    id          String      @id
+    newsTexts   NewsText[]
+    imgPath     String
+    createdAt   DateTime    @default(now())
+    newsBlocks  NewsBlock[]
+    createdBy   User?       @relation(fields: [createdById], references: [id])
+    createdById String
+}
+
+model NewsBlock {
+    id            String         @id
+    newsTexts     NewsText[]
+    imgPath       String
+    createdAt     DateTime       @default(now())
+    newsCard      NewsCard?      @relation(fields: [newsCardId], references: [id])
+    newsCardId    String
+    createdBy     User?          @relation(fields: [createdById], references: [id])
+    createdById   String
+    newsBlockRate NewsBlockRate?
+}
+
+model NewsText {
+    id             String        @id
+    title          String
+    body           String
+    globalRegion   GlobalRegion? @relation(fields: [globalRegionId], references: [id])
+    globalRegionId String
+    newsCard       NewsCard?     @relation(fields: [newsCardId], references: [id])
+    newsCardId     String?
+    newsBlock      NewsBlock?    @relation(fields: [newsBlockId], references: [id])
+    newsBlockId    String?
+}
+
+model GlobalRegion {
+    id        String     @id
+    name      String
+    newsTexts NewsText[]
+}
+
+model NewsBlockRate {
+    id             String          @id
+    likes          Int             @default(0)
+    dislikes       Int             @default(0)
+    newsBlock      NewsBlock       @relation(fields: [newsBlockId], references: [id])
+    newsBlockId    String          @unique
+    userBlockRates UserBlockRate[]
+}
+
+model UserBlockRate {
+    newsBlockRate   NewsBlockRate? @relation(fields: [newsBlockRateId], references: [id])
+    newsBlockRateId String
+    user            User?          @relation(fields: [userId], references: [id])
+    userId          String
+    isLike          Boolean
+
+    @@id([newsBlockRateId, userId])
+}
