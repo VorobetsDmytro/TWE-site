@@ -1,0 +1,16 @@
+.footer {
+    h1, h2, h3, h4, h5 {
+        color: #c0c0c0;
+    }
+    &_title {
+        background-color: #1c1b1b;
+        padding: 2.6rem;
+        text-align: center;
+        height: 100%;
+    }
+    &_body {
+        background-color: #151413;
+        padding: 1.5rem;
+        color: #939393;
+    }
+}

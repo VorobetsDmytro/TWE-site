@@ -1,0 +1,48 @@
+$mainColor: #0073df;
+$redColor: #ff0000;
+
+.navbar {
+    width: 100%;
+    min-height: 50px;
+    min-height: 50px;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    z-index: 2;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 2;
+    &_title {
+        color: #e4e4e4;
+        font-size: 2.25rem;
+        font-weight: 600;
+        font-family: "Bebas Neue",sans-serif;
+    }
+    &_items {
+        display: flex;
+        a{
+            text-decoration: none;
+            color: #e4e4e4;
+            font-size: 1.25rem;
+            padding: 8px;
+            &:not(:last-of-type){
+                margin-right: 20px;
+            }
+            &:hover{
+                color: #ffffff;
+            }
+        }
+    }
+    &_button {
+        background-color: $mainColor;
+    }
+    &_button_red {
+        background-color: $redColor;
+    }
+    &_current {
+        border-bottom: 2px solid $mainColor;
+    }
+}

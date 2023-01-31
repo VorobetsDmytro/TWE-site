@@ -1,0 +1,57 @@
+$mainColor: #0073df;
+
+.popup_ok_cancel {
+    span {
+        color: #c0c0c0;
+    }
+    button {
+        padding: 5px;
+        border: 0px solid #1f1f1f;
+        color: #c0c0c0;
+        cursor: pointer;
+        &:hover{
+            color: #ffffff;
+        }
+    }
+    &_bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: 4;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    &_menu {
+        padding: 1.5rem;
+        width: 300px;
+        background-color: rgba(39, 39, 39, 1);
+        box-shadow: 0 0 5px rgba($color: #000000, $alpha: 0.1);
+    }
+    &_ok_btn, &_cancel_btn {
+        margin-top: 10px;
+        font-size: 1.25rem;
+        font-weight: 600;
+        background-color: $mainColor;
+    }
+    &_buttons {
+        button {
+            &:not(:last-of-type){
+                margin-right: 20px;
+            }
+        }
+    }
+    &_ok_btn {
+        background-color: $mainColor;
+    }
+    &_cancel_btn {
+        background-color: #6d6d6d;
+    }
+    &_text {
+        font-size: 1.4rem;
+    }
+}

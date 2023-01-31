@@ -1,0 +1,107 @@
+$mainColor: #0073df;
+
+.news_card_open {
+    h1, h2, h3, h4, h5 {
+        color: #c0c0c0;
+    }
+    p {
+        color: #939393;
+    }
+    &_header {
+        position: relative;
+        min-height: 80vh;
+        padding: calc(10rem + 100px) 0 8rem 0;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+    &_container {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+        flex-direction: column;
+        text-align: center;
+    }
+    &_info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+    }
+    &_title {
+        font-size: 6rem;
+        line-height: 6rem;
+        margin: 0 0 1rem 0;
+        text-shadow: 0 2px 0 rgba(0, 0, 0, 50%);
+    }
+    &_body {
+        color: #939393;
+        max-width: 60%;
+        margin: 0 0 2rem 0;
+        line-height: 1.75rem;
+        font-size: 1.5rem;
+        text-shadow: 0 2px 0 rgba(0, 0, 0, 50%);
+    }
+    &_image {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        position: absolute;
+        -webkit-mask-image: linear-gradient(rgba(255,255,255,.6) 0%, transparent 100%);
+        opacity: 1;
+        filter: blur(0px);
+    }
+    &_admin {
+        position: absolute;
+        bottom: .0rem;
+        left: .0rem;
+        width: 100%;
+    }
+    &_admin_body {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0.5rem;
+    }
+    &_admin_btn {
+        padding: 5px;
+        border: 0px solid #1f1f1f;
+        background-color: $mainColor;
+        color: #c0c0c0;
+        cursor: pointer;
+        &:hover{
+            color: #ffffff;
+        }
+        &:not(:last-of-type){
+            margin-right: 10px;
+        }
+    }
+    &_remove_btn {
+        padding: 5px;
+        border: 0px solid #1f1f1f;
+        background-color: #ff0000;
+        color: #c0c0c0;
+        cursor: pointer;
+        &:hover{
+            color: #ffffff;
+        }
+    }
+    &_empty {
+        h1, h2, h3, h4, h5 {
+            color: #c0c0c0;
+        }
+        min-height: 80vh;
+        padding: 8rem 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}

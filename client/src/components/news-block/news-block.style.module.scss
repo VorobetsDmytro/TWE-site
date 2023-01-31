@@ -1,0 +1,119 @@
+$mainColor: #0073df;
+
+.news_block {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+    h1, h2, h3, h4, h5 {
+        color: #c0c0c0;
+    }
+    p {
+        color: #939393;
+        text-align: start;
+        margin: 0;
+    }
+    &_container {
+        position: relative;
+        z-index: 1;
+        align-items: flex-end;
+        justify-content: flex-end;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        width: 100%;
+        max-width: 800px;
+    }
+    &_info {
+        width: 100%;
+        margin: 5rem auto;
+        padding: 16px;
+        background-color: rgba(39, 39, 39, 0.95);
+    }
+    &_title {
+        font-size: 3rem;
+        margin: 0 0 1rem 0;
+    }
+    &_body {
+        color: #939393;
+        max-width: 60%;
+        margin: 0 0 2rem 0;
+        line-height: 1.5rem;
+        font-size: 1.5rem;
+    }
+    &_image {
+        opacity: .3;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+    &_rate {
+        display: flex;
+        justify-content: flex-end;
+        svg {
+            width: 2rem;
+            height: 2rem;
+            padding: 0.5rem;
+        }
+        &_item, &_item_picked {
+            display: flex;
+            align-items: center;
+            color: #c0c0c0;
+            padding: 0 .3rem 0 0;
+        }
+        &_item_picked {
+            display: flex;
+            align-items: center;
+            color: #c0c0c0;
+            background-color: $mainColor;
+        }
+        div {
+            &:not(:last-of-type){
+                margin-right: 10px;
+            }
+        }
+    }
+    &_admin {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    }
+    &_admin_body {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+    &_remove_btn {
+        padding: 5px;
+        border: 0px solid #1f1f1f;
+        background-color: #ff0000;
+        color: #c0c0c0;
+        cursor: pointer;
+        &:hover{
+            color: #ffffff;
+        }
+    }
+    &_admin_btn {
+        padding: 5px;
+        border: 0px solid #1f1f1f;
+        background-color: $mainColor;
+        color: #c0c0c0;
+        cursor: pointer;
+        &:hover{
+            color: #ffffff;
+        }
+        &:not(:last-of-type){
+            margin-right: 10px;
+        }
+    }
+}

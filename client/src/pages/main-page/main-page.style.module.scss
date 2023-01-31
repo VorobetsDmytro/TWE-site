@@ -1,0 +1,76 @@
+$mainColor: #0073df;
+
+.main {
+    h1, h2, h3, h4, h5 {
+        color: #c0c0c0;
+    }
+    p {
+        color: #939393;
+    }
+    &_header {
+        position: relative;
+        min-height: 80vh;
+        padding: calc(10rem + 100px) 0 8rem 0;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+    &_image {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        position: absolute;
+        opacity: 1;
+        filter: blur(3px);
+        -webkit-mask-image: linear-gradient(rgba(255,255,255,.6) 0%, transparent 100%);
+    }
+    &_container {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+        flex-direction: column;
+        text-align: center;
+    }
+    &_info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+    }
+    &_title {
+        font-size: 6rem;
+        text-shadow: 0 2px 0 rgba(0, 0, 0, 50%);
+    }
+    &_body {
+        font-size: 2rem;
+        text-shadow: 0 2px 0 rgba(0, 0, 0, 50%);
+    }
+    &_download_btn {
+        padding: 0.3rem 0.5rem;
+        border: 0px solid #1f1f1f;
+        background-color: $mainColor;
+        color: #c0c0c0;
+        font-size: 3rem;
+        font-family: "Bebas Neue",sans-serif;
+        margin-top: 1rem;
+        text-shadow: 0 2px 0 rgba(0, 0, 0, 50%);
+        cursor: pointer;
+        &:hover{
+            color: #ffffff;
+        }
+        &:not(:last-of-type){
+            margin-right: 10px;
+        }
+    }
+    &_worst_word {
+        color: $mainColor;
+    }
+}
