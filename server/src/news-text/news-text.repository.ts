@@ -37,6 +37,14 @@ export class NewsTextRepository implements INewsTextRepository {
             }
         });
     }
+
+    async getManyByNewsCardId(newsCardId: string): Promise<NewsText[]> {
+        return this.tweMainDBService.newsText.findMany({where: {newsCardId}});
+    }
+
+    async getManyByNewsBlockId(newsBlockId: string): Promise<NewsText[]> {
+        return this.tweMainDBService.newsText.findMany({where: {newsBlockId}});
+    }
     
     async update(dto: Prisma.NewsTextUncheckedUpdateInput, id: string): Promise<NewsText> {
         return this.tweMainDBService.newsText.update({data: dto, where: {id}});

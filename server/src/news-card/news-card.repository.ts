@@ -3,10 +3,26 @@ import { TWEPostgreSQLMainPrismaService } from '../db/twe-postgreSQL-main.prisma
 import { INewsCardRepository } from "./interfaces/news-card.repository.interface";
 import { Prisma, NewsCard } from "prisma/postrgreSQL-main/generated/client";
 import { v4 } from "uuid"
+import { SecureUserSelect } from 'src/user/user.select';
 
 @Injectable()
 export class NewsCardRepository implements INewsCardRepository {
     constructor(private tweMainDBService: TWEPostgreSQLMainPrismaService){}
+
+    async getTotal(globalRegionName: string): Promise<number> {
+        return (await this.tweMainDBService.newsCard.aggregate({
+            where: {
+                newsTexts: {
+                    some: {
+                        globalRegion: {
+                            name: globalRegionName
+                        }
+                    }
+                }
+            },
+            _count: true,
+        }))._count;
+    }
 
     async create(dto: Prisma.NewsCardUncheckedCreateInput): Promise<NewsCard> {
         return this.tweMainDBService.newsCard.create({data: dto});
@@ -16,9 +32,9 @@ export class NewsCardRepository implements INewsCardRepository {
         return this.tweMainDBService.newsCard.findUnique({where: {id}});
     }
 
-    async getMany(globalRegionName?: string): Promise<NewsCard[]> {
+    async getOneByIdFront(id: string, userId?: string, globalRegionName?: string,): Promise<NewsCard> {
         if(globalRegionName)
-            return this.tweMainDBService.newsCard.findMany({
+            return this.tweMainDBService.newsCard.findUnique({
                 include: {
                     newsTexts: {
                         where: {
@@ -26,10 +42,65 @@ export class NewsCardRepository implements INewsCardRepository {
                                 name: globalRegionName
                             }
                         }
+                    },
+                    newsBlocks: {
+                        include: {
+                            newsTexts: {
+                                where: {
+                                    globalRegion: {
+                                        name: globalRegionName
+                                    }
+                                }
+                            },
+                            newsBlockRate: {
+                                include: {
+                                    userBlockRates: {
+                                        where: {
+                                            userId
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        where: {
+                            newsCardId: id
+                        }
+                    }
+                },
+                where: {id}
+            });
+        return this.tweMainDBService.newsCard.findUnique({where: {id}});
+    }
+
+    async getMany(): Promise<NewsCard[]> {
+        return this.tweMainDBService.newsCard.findMany();
+    }
+
+    async getManyFront(globalRegionName: string, limit: number, offset: number) {
+        return this.tweMainDBService.newsCard.findMany({
+            where: {
+                newsTexts: {
+                    some: {
+                        globalRegion: {
+                            name: globalRegionName
+                        }
                     }
                 }
-            });
-        return this.tweMainDBService.newsCard.findMany();
+            },
+            include: {
+                newsTexts: {
+                    where: {
+                        globalRegion: {
+                            name: globalRegionName
+                        }
+                    }
+                }
+            },
+            orderBy: {
+                createdAt: 'desc'
+            },
+            skip: offset, take: limit
+        });
     }
 
     async update(dto: Prisma.NewsCardUncheckedUpdateInput, id: string): Promise<NewsCard> {

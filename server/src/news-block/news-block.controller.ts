@@ -41,7 +41,7 @@ export class NewsBlockController {
     @UseInterceptors(FileInterceptor('image'))
     async create(@Body() dto: CreateNewsBlockDto, @UploadedFile() image: Express.Multer.File, @Request() req) {
         if(!image)
-            throw new HttpException('The iamge is required.', 400);
+            throw new HttpException('The image is required.', 400);
         dto = createNewsBlockMapper.fromControllerToService(dto);
         const userReq = req.user;
         const user = await this.userRepository.getOneById(userReq.id);
@@ -59,10 +59,11 @@ export class NewsBlockController {
         const newsTextId = await this.newsTextRepository.generateId();
         const newsText = await this.newsTextRepository.create({id: newsTextId, globalRegionId: globalRegion.id, title: dto.title, body: dto.body, newsBlockId});
         const newsBlockRateId = await this.newsBlockRateRepository.generateId();
-        await this.newsBlockRateRepository.create({id: newsBlockRateId, newsBlockId});
+        const newsBlockRate = await this.newsBlockRateRepository.create({id: newsBlockRateId, newsBlockId});
         return {
             ...newsBlock,
-            newsTexts: [newsText]
+            newsTexts: [newsText],
+            newsBlockRate
         };
     }
 

@@ -14,6 +14,7 @@ import { RoleTypes } from 'src/role/role.type';
 import { ActivationLinkRepository } from 'src/activation-link/activation-link.repository';
 import { ActivationLinkService } from 'src/activation-link/activation-link.service';
 import { MailTransporterService } from 'src/mail-transporter/mail-transporter.service';
+import { SecureUserSelect, SelectUser } from 'src/user/user.select';
 
 @Controller('auth')
 export class AuthController {
@@ -24,6 +25,20 @@ export class AuthController {
                 private activationLinkRepository: ActivationLinkRepository,
                 private activationLinkService: ActivationLinkService,
                 private mailTransporterService: MailTransporterService) {}
+
+    @Get()
+    @UseGuards(IsLogedInGuard)
+    async auth(@Req() req: Request) {
+        const userReq = req.user;
+        const user = await this.userRepository.getOneById(userReq.id, SecureUserSelect);
+        if(!user)
+            throw new HttpException('The user was not found.', 404);
+        const token = await this.tokenService.generateToken(user);
+        if(!token)
+            throw new HttpException('Error creating a token.', 400);
+        await this.tokenService.saveToken(user.id, token);
+        return { user, token };
+    }
 
     @Get('/logout')
     @UseGuards(IsLogedInGuard)
@@ -66,7 +81,7 @@ export class AuthController {
     @Post('/login')
     async login(@Body() dto: LoginDto){
         dto = loginMapper.fromControllerToService(dto);
-        const user = await this.userRepository.getOneByEmail(dto.email);
+        const user = await this.userRepository.getOneByEmail(dto.email, SelectUser);
         if(!user)
             throw new HttpException('Incorrect data.', 400);
         const activationLink = await this.activationLinkRepository.getOneByUserId(user.id);
@@ -79,6 +94,7 @@ export class AuthController {
         if(!token)
             throw new HttpException('Error creating a token.', 400);
         await this.tokenService.saveToken(user.id, token);
-        return { token };
+        delete user.password;
+        return { user, token };
     }
 }

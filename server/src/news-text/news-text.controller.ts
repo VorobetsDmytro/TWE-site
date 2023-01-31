@@ -74,7 +74,7 @@ export class NewsTextController {
         });
     }
 
-    @Patch('/update/:newsTextId')
+    @Patch('/:newsTextId')
     @Roles([RoleTypes.ADMIN])
     @UseGuards(RolesGuard)
     async updateNewsText(@Body() dto: UpdateNewsCardTextDto, @Param('newsTextId') newsTextId: string) {
@@ -87,23 +87,23 @@ export class NewsTextController {
             globalRegion = await this.globalRegionRepository.getOneByName(dto.globalRegionName);
             if(!globalRegion)
                 throw new HttpException('The global region was not found.', 404);
-            if(globalRegion.id == newsText.globalRegionId)
-                throw new HttpException('The news text already has this global region.', 400);
-            if(newsText.newsCardId) {
-                const newsCard = await this.newsCardRepository.getOneById(newsText.newsCardId);
-                if(!newsCard)
-                    throw new HttpException('The news card was not found.', 404);
-                const checkNewsTextUnique = await this.newsTextRepository.getOneByNewsCardIdAndGlobalRegionId(newsCard.id, globalRegion.id);
-                if(checkNewsTextUnique)
-                    throw new HttpException('The news text already has this global region.', 400);
-            }
-            if(newsText.newsBlockId) {
-                const newsBlock = await this.newsBlockRepository.getOneById(newsText.newsBlockId);
-                if(!newsBlock)
-                    throw new HttpException('The news block was not found.', 404);
-                const checkNewsTextUnique = await this.newsTextRepository.getOneByNewsBlockIdAndGlobalRegionId(newsBlock.id, globalRegion.id);
-                if(checkNewsTextUnique)
-                    throw new HttpException('The news text already has this global region.', 400);
+            if(globalRegion.id != newsText.globalRegionId) {
+                if(newsText.newsCardId) {
+                    const newsCard = await this.newsCardRepository.getOneById(newsText.newsCardId);
+                    if(!newsCard)
+                        throw new HttpException('The news card was not found.', 404);
+                    const checkNewsTextUnique = await this.newsTextRepository.getOneByNewsCardIdAndGlobalRegionId(newsCard.id, globalRegion.id);
+                    if(checkNewsTextUnique)
+                        throw new HttpException('The news text already has this global region.', 400);
+                }
+                if(newsText.newsBlockId) {
+                    const newsBlock = await this.newsBlockRepository.getOneById(newsText.newsBlockId);
+                    if(!newsBlock)
+                        throw new HttpException('The news block was not found.', 404);
+                    const checkNewsTextUnique = await this.newsTextRepository.getOneByNewsBlockIdAndGlobalRegionId(newsBlock.id, globalRegion.id);
+                    if(checkNewsTextUnique)
+                        throw new HttpException('The news text already has this global region.', 400);
+                }
             }
         }
         if(globalRegion)
@@ -118,6 +118,16 @@ export class NewsTextController {
         const newsText = await this.newsTextRepository.getOneById(newsTextId);
         if(!newsText)
             throw new HttpException('The news text was not found.', 404);
+        if(newsText.newsCardId) {
+            const relativeToNewsCard = await this.newsTextRepository.getManyByNewsCardId(newsText.newsCardId);
+            if(relativeToNewsCard.length <= 1)
+                throw new HttpException('You can not remove the last news text for the relative news card.', 400);
+        }
+        if(newsText.newsBlockId) {
+            const relativeToNewsBlock = await this.newsTextRepository.getManyByNewsBlockId(newsText.newsBlockId);
+            if(relativeToNewsBlock.length <= 1)
+                throw new HttpException('You can not remove the last news text for the relative news block.', 400);
+        }
         await this.newsTextRepository.delete(newsText.id);
         return { message: 'The news text has been deleted successfully.' };
     }

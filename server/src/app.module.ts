@@ -14,6 +14,8 @@ import { FileUploaderModule } from './file-uploader/file-uploader.module';
 import { NewsBlockModule } from './news-block/news-block.module';
 import { NewsBlockRateModule } from './news-block-rate/news-block-rate.module';
 import { UserBlockRateModule } from './user-block-rate/user-block-rate.module';
+import { FileModule } from './file/file.module';
+import { ResetPasswordModule } from './reset-password/reset-password.module';
 
 @Module({
     imports: [
@@ -43,7 +45,9 @@ import { UserBlockRateModule } from './user-block-rate/user-block-rate.module';
         FileUploaderModule,
         NewsBlockModule,
         NewsBlockRateModule,
-        UserBlockRateModule
+        UserBlockRateModule,
+        FileModule,
+        ResetPasswordModule
     ]
 })
 export class AppModule { }

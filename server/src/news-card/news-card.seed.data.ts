@@ -12,7 +12,7 @@ class NewsCardSeedData {
     public newsCards: Prisma.NewsCardUncheckedCreateInput[] = [];
     constructor() {
         for(let i = 0; i < this.users.length; ++i) {
-            for(let j = 0; j < 3; ++j) {
+            for(let j = 0; j < 10; ++j) {
                 const imgCopyPath = path.resolve(IMAGES_PATH, v4() + ".png");
                 if(!this.copyFile(NewsCardSeedData.imgPath, imgCopyPath))
                     continue;

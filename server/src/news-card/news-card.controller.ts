@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpException, Param, Patch, Post, Query, Request, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, Param, Patch, Post, Query, Req, Request, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Roles } from 'src/decorators/roles.decorator';
 import { RolesGuard } from 'src/guards/roles.guard';
@@ -16,6 +16,9 @@ import { GlobalRegionTypes } from 'src/global-region/global-region.types';
 import { NewsBlockRepository } from 'src/news-block/news-block.repository';
 import { NewsBlockRateRepository } from 'src/news-block-rate/news-block-rate.repository';
 import { UserBlockRateRepository } from 'src/user-block-rate/user-block-rate.repository';
+import { ToNumberPipe } from 'src/pipes/to-number.pipe';
+import { getNewsCardsMapper } from './mappers/get-news-cards.mapper';
+import { TryLogedInGuard } from 'src/guards/try-loged-in.guard';
 
 @Controller('news-card')
 export class NewsCardController {
@@ -29,10 +32,32 @@ export class NewsCardController {
                 private userBlockRateRepository: UserBlockRateRepository) {}
 
     @Get()
-    async getAll(@Query('gr') globalRegion?: string) {
+    async getAll(@Query('gr') globalRegion: string = GlobalRegionTypes.US, @Query('limit', ToNumberPipe) limitQ: number = 9, @Query('offset', ToNumberPipe) offsetQ: number = 0) {
+        const { limit, offset } = getNewsCardsMapper.fromControllerToService(limitQ, offsetQ);
+        let newsCards = await this.newsCardRepository.getManyFront(globalRegion, limit, offset);
+        newsCards = newsCards.filter((newsCard) => {
+            return newsCard.newsTexts.length > 0;
+        });
+        const total = await this.newsCardRepository.getTotal(globalRegion);
+        return {
+            newsCards,
+            total
+        }
+    }
+
+    @Get('/:newsCardId')
+    @UseGuards(TryLogedInGuard)
+    async getOneById(@Param('newsCardId') newsCardId: string, @Request() req, @Query('gr') globalRegion?: string) {
+        const userReq = req.user;
+        const userId = userReq ? userReq.id : '';
+        let newsCard;
         if(!globalRegion)
-            return this.newsCardRepository.getMany(GlobalRegionTypes.US);
-        return this.newsCardRepository.getMany(globalRegion);
+            newsCard = await this.newsCardRepository.getOneByIdFront(newsCardId, userId, GlobalRegionTypes.US);
+        else
+            newsCard = this.newsCardRepository.getOneByIdFront(newsCardId, userId, globalRegion);
+        if(!newsCard)
+            throw new HttpException('The news card was not found.', 404);
+        return newsCard;
     }
 
     @Post()

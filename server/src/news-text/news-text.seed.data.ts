@@ -45,7 +45,7 @@ class NewsTextSeedData {
     private getBody(globalRegionName: string): string {
         switch(globalRegionName){
         case "UA":
-            return "TWE вмicт";
+            return "TWE вміст";
         default:
             return "TWE body";
         }

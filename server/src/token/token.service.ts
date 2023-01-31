@@ -11,8 +11,9 @@ export class TokenService {
     async generateToken(user: Prisma.UserUncheckedCreateInput): Promise<string> {
         const payload = {
             id: user.id,
-            email: user.email
-        }
+            email: user.email,
+            username: user.username
+        };
         return this.jwtService.sign(payload);
     }
 

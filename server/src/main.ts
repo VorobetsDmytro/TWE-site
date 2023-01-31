@@ -14,7 +14,7 @@ declare global {
 
 const start = async () => {
     const PORT = process.env.PORT || 5000;
-    const app = await NestFactory.create<NestExpressApplication>(AppModule);
+    const app = await NestFactory.create<NestExpressApplication>(AppModule, {cors: true});
     app.useGlobalPipes(new ValidationPipe);
     app.useStaticAssets(STATIC_PATH);
     await app.listen(PORT, () => console.log(`The server has been started on port ${PORT}.`));
