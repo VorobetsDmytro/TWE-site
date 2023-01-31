@@ -370,6 +370,34 @@
 					"response": []
 				},
 				{
+					"name": "Get one by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server-url}}/news-card/NEWSCARDID",
+							"host": [
+								"{{server-url}}"
+							],
+							"path": [
+								"news-card",
+								"NEWSCARDID"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update",
 					"request": {
 						"auth": {
@@ -662,7 +690,7 @@
 					"response": []
 				},
 				{
-					"name": "Update news card text",
+					"name": "Update news text",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -686,13 +714,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{server-url}}/news-text/update/NEWSTEXTID",
+							"raw": "{{server-url}}/news-text/NEWSTEXTID",
 							"host": [
 								"{{server-url}}"
 							],
 							"path": [
 								"news-text",
-								"update",
 								"NEWSTEXTID"
 							]
 						}
@@ -803,6 +830,91 @@
 							],
 							"path": [
 								"news-block-rate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "File",
+			"item": [
+				{
+					"name": "Donwload TWE",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server-url}}/file/twe/download",
+							"host": [
+								"{{server-url}}"
+							],
+							"path": [
+								"file",
+								"twe",
+								"download"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ResetPassword",
+			"item": [
+				{
+					"name": "Forgot password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server-url}}/reset-password/forgot",
+							"host": [
+								"{{server-url}}"
+							],
+							"path": [
+								"reset-password",
+								"forgot"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server-url}}/reset-password/reset/USERID/TOKEN",
+							"host": [
+								"{{server-url}}"
+							],
+							"path": [
+								"reset-password",
+								"reset",
+								"USERID",
+								"TOKEN"
 							]
 						}
 					},
