@@ -87,11 +87,36 @@ $mainColor: #0073df;
         bottom: 0;
         left: 0;
         width: 100%;
-    }
-    &_admin_body {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
+        &_buttons {
+            width: 50%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px;
+            padding: 5px;
+        }
+        &_remove {
+            padding: 5px;
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+        }
+        &_body {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+        &_btn {
+            padding: 5px;
+            border: 0px solid #1f1f1f;
+            background-color: $mainColor;
+            color: #c0c0c0;
+            cursor: pointer;
+            &:hover{
+                color: #ffffff;
+            }
+            &:not(:last-of-type){
+                margin-right: 10px;
+            }
+        }
     }
     &_remove_btn {
         padding: 5px;
@@ -103,17 +128,37 @@ $mainColor: #0073df;
             color: #ffffff;
         }
     }
-    &_admin_btn {
-        padding: 5px;
-        border: 0px solid #1f1f1f;
-        background-color: $mainColor;
-        color: #c0c0c0;
-        cursor: pointer;
-        &:hover{
-            color: #ffffff;
+}
+
+@media (max-width: 500px) {
+    .news_block {
+        &_admin {
+            bottom: -20px;
+            &_body {
+                flex-direction: column;
+            }
+            &_buttons {
+                width: 100%;
+            }
         }
-        &:not(:last-of-type){
-            margin-right: 10px;
+    }
+}
+
+@media (max-width: 350px) {
+    .news_block {
+        &_admin {
+            bottom: -50px;
+            &_buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    }
+}
+
+@media (max-width: 300px) {
+    .news_block {
+        &_admin {
+            bottom: -70px;
         }
     }
 }

@@ -96,12 +96,12 @@ export const NewsBlockComponent: FC<INewsBlockComponent> = ({newsBlock}) => {
                 {isAdmin &&
                     <div className={style.news_block_admin}>
                         <div className={style.news_block_admin_body}>
-                            <div>
+                            <div className={style.news_block_admin_buttons}>
                                 <button className={style.news_block_admin_btn} onClick={() => setEditImageState(true)}>{newsBlockText.editBlockImage}</button>
                                 <button className={style.news_block_admin_btn} onClick={() => setEditTextState(true)}>{newsBlockText.editBlockText}</button>
                                 <button className={style.news_block_admin_btn} onClick={() => setAddTextState(true)}>{newsBlockText.addNewsText}</button>
                             </div>
-                            <div>
+                            <div className={style.news_block_admin_remove}>
                                 <button className={style.news_block_remove_btn} onClick={() => setShowRemovePopup(true)}>{newsBlockText.removeNewsBlock}</button>
                             </div>
                         </div>

@@ -69,3 +69,12 @@ $mainColor: #0073df;
         background-color: #6d6d6d;
     }
 }
+
+@media (max-width: 500px) {
+    .edit_news_card_image {
+        padding: 10rem 0;
+        &_input {
+            min-width: 100%;
+        }
+    }
+}

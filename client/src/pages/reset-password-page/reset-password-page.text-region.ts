@@ -16,7 +16,7 @@ export const resetPasswordTextRegion = (globalRegion: GlobalRegionTypes): ResetP
             submit: 'Submit',
             alertValidate: 'The password is required',
             alertError: 'Params error',
-            password: 'Password'
+            password: 'New password'
         }
     case GlobalRegionTypes.UA:
         return {
@@ -24,7 +24,7 @@ export const resetPasswordTextRegion = (globalRegion: GlobalRegionTypes): ResetP
             submit: 'Відправити',
             alertValidate: "Пароль є обов'язковим полем",
             alertError: 'Помилка параметрів',
-            password: 'Пароль'
+            password: 'Новий пароль'
         }
     }
 }

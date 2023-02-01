@@ -80,3 +80,12 @@ $mainColor: #0073df;
         cursor: pointer;
     }
 }
+
+@media (max-width: 500px) {
+    .edit_news_card_text  {
+        padding: 10rem 0;
+        &_input {
+            min-width: 100%;
+        }
+    }
+}

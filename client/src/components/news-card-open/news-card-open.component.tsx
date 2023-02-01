@@ -70,13 +70,13 @@ export const NewsCardOpenComponent: FC<INewsCardOpenComponent> = ({newsCard}) =>
                 {isAdmin && 
                     <div className={style.news_card_open_admin}>
                         <div className={style.news_card_open_admin_body}>
-                            <div>
+                            <div className={style.news_card_open_admin_buttons}>
                                 <button className={style.news_card_open_admin_btn} onClick={() => setEditImageState(true)}>{newsCardOpenText.editCardImage}</button>
                                 <button className={style.news_card_open_admin_btn} onClick={() => setEditTextState(true)}>{newsCardOpenText.editCardText}</button>
                                 <button className={style.news_card_open_admin_btn} onClick={() => setAddTextState(true)}>{newsCardOpenText.addNewsText}</button>
                                 <button className={style.news_card_open_admin_btn} onClick={() => setAddBlockState(true)}>{newsCardOpenText.addNewBlock}</button>
                             </div>
-                            <div>
+                            <div className={style.news_card_open_admin_remove}>
                                 <button className={style.news_card_open_remove_btn} onClick={() => setShowRemovePopup(true)}>{newsCardOpenText.removeNewsBlock}</button>
                             </div>
                         </div>

@@ -35,6 +35,11 @@ $redColor: #ff0000;
                 color: #ffffff;
             }
         }
+        &_body {
+            margin-left: 20px;
+            display: flex;
+            align-items: center;
+        }
     }
     &_button {
         background-color: $mainColor;
@@ -44,5 +49,31 @@ $redColor: #ff0000;
     }
     &_current {
         border-bottom: 2px solid $mainColor;
+    }
+}
+
+@media (max-width: 700px) {
+    .navbar {
+        display: block;
+        padding: 0.5rem;
+        &_header {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        &_items {
+            flex-direction: column;
+            align-items: center;
+            &_body {
+                margin-left: 0;
+                padding: 5px;
+            }
+        }
+        &_button, &_button_red {
+            font-size: 1rem !important;
+        }
+        a {
+            font-size: 1rem !important;
+        }
     }
 }
