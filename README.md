@@ -41,7 +41,7 @@ Generate prisma
 
 ## Client commands
 
-Start server
+Start client
 >`npm start`
 
 ## Author
