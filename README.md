@@ -45,4 +45,4 @@ Start client
 >`npm start`
 
 ## Author
-[Dmytro Vorobets](https://github.com/Parasik72)
+[Dmytro Vorobets](https://github.com/VorobetsDmytro)
